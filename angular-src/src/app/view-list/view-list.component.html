@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="d-flex justify-content-center">
+      <div class="d-inline-flex ">
+        <h2> Awesome Bucketlist App </h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row" style="margin-bottom: 15px">
+  <div class="col-sm-12">
+    <div class="d-flex">
+      <div class="align-self-start">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <!-- Table starts here -->
+    <table id="table" class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Priority Level</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th> Delete </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let list of lists; let i = index">
+          <td>{{i+1}}</td>
+          <td>{{list.category}}</td>
+          <td>{{list.title}}</td>
+          <td>{{list.description}}</td>
+          <td>
+            <button type="button" class="btn btn-danger" (click)="deleteList(list); $event.stopPropagation();">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-add-list (addList)='onAddList($event)'> </app-add-list>
