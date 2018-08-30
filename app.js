@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bucketlist = require('./controllers/bucketlist');
+const priorityController = require('./controllers/priorityController');
 
 //Initialize our app variable
 const app = express();
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 
 //Routing all HTTP requests to /bucketlist to bucketlist controller
 app.use('/bucketlist',bucketlist);
+app.use('/priority',priorityController);
 
 //Listen to port 3000
 app.listen(port, () => {

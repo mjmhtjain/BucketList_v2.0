@@ -43,5 +43,10 @@ export class ListService {
     // .map(res => res.json());
   }
 
+  public getPriorities(){
+    let URI = this.serverApi+'/priority/fetchAll';
+    let obj = this.http.get(URI);
+    return obj;
+  }
 
 }

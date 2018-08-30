@@ -281,6 +281,11 @@ var ListService = /** @class */ (function () {
         return obj;
         // .map(res => res.json());
     };
+    ListService.prototype.getPriorities = function () {
+        var URI = this.serverApi + '/priority/fetchAll';
+        var obj = this.http.get(URI);
+        return obj;
+    };
     ListService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
@@ -343,9 +348,21 @@ var ViewListComponent = /** @class */ (function () {
     function ViewListComponent(listServ) {
         this.listServ = listServ;
         this.lists = [];
+        this.priorityList = [];
     }
     ViewListComponent.prototype.ngOnInit = function () {
+        this.loadPriorities();
         this.loadLists();
+    };
+    ViewListComponent.prototype.loadPriorities = function () {
+        var _this = this;
+        this.listServ.getPriorities().subscribe(function (res) {
+            if (res['success']) {
+                console.log(res['object']);
+                _this.priorityList = res['object'];
+            }
+        }, function (err) {
+        });
     };
     ViewListComponent.prototype.loadLists = function () {
         var _this = this;
@@ -440,7 +457,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\OJN5KOR\Desktop\Gantt-Project\bucketlist\angular-src\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\OJN5KOR\Desktop\Gantt-Project\BucketList_v2.0\angular-src\src\main.ts */"./src/main.ts");
 
 
 /***/ })
