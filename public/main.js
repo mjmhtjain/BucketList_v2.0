@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Add BucketList</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <form>\n          <div class=\"form-group row\">\n            <div class=\"col-sm-2\">\n              <label for=\"title\" class=\"col-form-label\">Title</label>\n            </div>\n            <div class=\"col-sm-10\">\n              <input class=\"form-control\" type=\"text\" [(ngModel)]=\"newList.title\" name=\"title\" required>\n            </div>\n          </div>\n\n          <div class=\"form-group row\">\n            <div class=\"col-sm-2\">\n              <label for=\"category\" class=\"col-form-label\">Priority</label>\n            </div>\n            <div class=\"col-sm-10\">\n              <select class=\"form-control\" [(ngModel)]=\"newList.category\" name=\"category\">\n                <option value=\"High\">High </option>\n                <option value=\"Medium\">Medium </option>\n                <option value=\"Low\">Low </option>\n              </select>\n            </div>\n          </div>\n\n          <div class=\"form-group row\">\n            <div class=\"col-sm-2\">\n              <label for=\"description\" class=\"col-form-label\">description</label>\n            </div>\n            <div class=\"col-sm-10\">\n              <input class=\"form-control\" type=\"text\" [(ngModel)]=\"newList.description\" name=\"description\" required>\n            </div>\n          </div>\n\n        </form>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n        <button type=\"submit\" class=\"btn btn-primary\" (click)=\"onSubmit()\">Add</button>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\r\n  <div class=\"modal-dialog\" role=\"document\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Add BucketList</h5>\r\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <form>\r\n          <div class=\"form-group row\">\r\n            <div class=\"col-sm-2\">\r\n              <label for=\"title\" class=\"col-form-label\">Title</label>\r\n            </div>\r\n            <div class=\"col-sm-10\">\r\n              <input class=\"form-control\" type=\"text\" [(ngModel)]=\"newList.title\" name=\"title\" required>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"form-group row\">\r\n            <div class=\"col-sm-2\">\r\n              <label for=\"category\" class=\"col-form-label\">Priority</label>\r\n            </div>\r\n            <div class=\"col-sm-10\">\r\n              <select class=\"form-control\" [(ngModel)]=\"newList.priority\" name=\"category\">\r\n                <option value=\"p\" *ngFor=\"let p of priorityList\">{{p.level}}</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"form-group row\">\r\n            <div class=\"col-sm-2\">\r\n              <label for=\"description\" class=\"col-form-label\">description</label>\r\n            </div>\r\n            <div class=\"col-sm-10\">\r\n              <input class=\"form-control\" type=\"text\" [(ngModel)]=\"newList.description\" name=\"description\" required>\r\n            </div>\r\n          </div>\r\n\r\n        </form>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n        <button type=\"submit\" class=\"btn btn-primary\" (click)=\"onSubmit()\">Add</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -71,18 +71,33 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var AddListComponent = /** @class */ (function () {
     function AddListComponent(listServ) {
         this.listServ = listServ;
+        this.priorityList = [];
         this.addList = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
     }
     AddListComponent.prototype.ngOnInit = function () {
-        this.newList = {
-            title: '',
-            category: '',
-            description: '',
-            _id: ''
-        };
-        this.newList.category = 'High';
+        // this.newList = {
+        //   title: '',
+        //   category: '',
+        //   description: '',
+        //   _id: ''
+        var _this = this;
+        // };
+        this.loadPriorities(function (priority) {
+            _this.newList['priority'] = priority;
+        });
     };
     ;
+    AddListComponent.prototype.loadPriorities = function (callback) {
+        var _this = this;
+        this.listServ.getPriorities().subscribe(function (res) {
+            if (res['success']) {
+                console.log(res['object']);
+                _this.priorityList = res['object'];
+                callback(_this.priorityList[0]);
+            }
+        }, function (err) {
+        });
+    };
     AddListComponent.prototype.onSubmit = function () {
         var _this = this;
         this.listServ.addList(this.newList).subscribe(function (response) {
@@ -130,7 +145,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-sm bg-light\">\n\n  <!-- Links -->\n  <ul class=\"nav nav-pills\">\n    <li class=\"nav-item\">\n      <a class=\"nav-link active\" href=\"#\">Link 1</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Link 2</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Link 3</a>\n    </li>\n  </ul>\n\n  <ul class=\"nav nav-pills ml-auto\">\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">User Name</a>\n    </li>\n\n    <li class=\"nav-item\">\n      <a class=\"navbar-brand\" href=\"#\">\n        <i class=\"far fa-user\"></i>\n      </a>\n    </li>\n  </ul>\n\n</nav>\n<div class=\"container-fluid\" style=\"margin-top: 10px\">\n  <div >\n    <app-view-list> </app-view-list>\n  </div>\n\n</div>"
+module.exports = "<nav class=\"navbar navbar-expand-sm bg-light\">\r\n\r\n  <!-- Links -->\r\n  <ul class=\"nav nav-pills\">\r\n    <li class=\"nav-item\">\r\n      <a class=\"nav-link active\" href=\"#\">Link 1</a>\r\n    </li>\r\n    <li class=\"nav-item\">\r\n      <a class=\"nav-link\" href=\"#\">Link 2</a>\r\n    </li>\r\n    <li class=\"nav-item\">\r\n      <a class=\"nav-link\" href=\"#\">Link 3</a>\r\n    </li>\r\n  </ul>\r\n\r\n  <ul class=\"nav nav-pills ml-auto\">\r\n    <li class=\"nav-item\">\r\n      <a class=\"nav-link\" href=\"#\">User Name</a>\r\n    </li>\r\n\r\n    <li class=\"nav-item\">\r\n      <a class=\"navbar-brand\" href=\"#\">\r\n        <i class=\"far fa-user\"></i>\r\n      </a>\r\n    </li>\r\n  </ul>\r\n\r\n</nav>\r\n<div class=\"container-fluid\" style=\"margin-top: 10px\">\r\n  <div >\r\n    <app-view-list> </app-view-list>\r\n  </div>\r\n\r\n</div>"
 
 /***/ }),
 
@@ -317,7 +332,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-sm-12\">\n    <div class=\"d-flex justify-content-center\">\n      <div class=\"d-inline-flex \">\n        <h2> Awesome Bucketlist App </h2>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n<div class=\"row\" style=\"margin-bottom: 15px\">\n  <div class=\"col-sm-12\">\n    <div class=\"d-flex\">\n      <div class=\"align-self-start\">\n        <button type=\"button\" class=\"btn btn-success\" data-toggle=\"modal\" data-target=\"#exampleModal\">\n          <i class=\"fas fa-plus\"></i>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div class=\"row\">\n  <div class=\"col-sm-12\">\n    <!-- Table starts here -->\n    <table id=\"table\" class=\"table\">\n      <thead>\n        <tr>\n          <th>#</th>\n          <th>Priority Level</th>\n          <th>Title</th>\n          <th>Description</th>\n          <th> Delete </th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor=\"let list of lists; let i = index\">\n          <td>{{i+1}}</td>\n          <td>{{list.category}}</td>\n          <td>{{list.title}}</td>\n          <td>{{list.description}}</td>\n          <td>\n            <button type=\"button\" class=\"btn btn-danger\" (click)=\"deleteList(list); $event.stopPropagation();\">Delete</button>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</div>\n\n<app-add-list (addList)='onAddList($event)'> </app-add-list>"
+module.exports = "<div class=\"row\">\r\n  <div class=\"col-sm-12\">\r\n    <div class=\"d-flex justify-content-center\">\r\n      <div class=\"d-inline-flex \">\r\n        <h2> Awesome Bucketlist App </h2>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n\r\n<div class=\"row\" style=\"margin-bottom: 15px\">\r\n  <div class=\"col-sm-12\">\r\n    <div class=\"d-flex\">\r\n      <div class=\"align-self-start\">\r\n        <button type=\"button\" class=\"btn btn-success\" data-toggle=\"modal\" data-target=\"#exampleModal\">\r\n          <i class=\"fas fa-plus\"></i>\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"row\">\r\n  <div class=\"col-sm-12\">\r\n    <!-- Table starts here -->\r\n    <table id=\"table\" class=\"table\">\r\n      <thead>\r\n        <tr>\r\n          <th>#</th>\r\n          <th>Priority Level</th>\r\n          <th>Title</th>\r\n          <th>Description</th>\r\n          <th> Delete </th>\r\n        </tr>\r\n      </thead>\r\n      <tbody>\r\n        <tr *ngFor=\"let list of lists; let i = index\">\r\n          <td>{{i+1}}</td>\r\n          <td>{{list.category_priorities[0].level}}</td>\r\n          <td>{{list.title}}</td>\r\n          <td>{{list.description}}</td>\r\n          <td>\r\n            <button type=\"button\" class=\"btn btn-danger\" (click)=\"deleteList(list); $event.stopPropagation();\">Delete</button>\r\n          </td>\r\n        </tr>\r\n      </tbody>\r\n    </table>\r\n  </div>\r\n</div>\r\n\r\n<app-add-list (addList)='onAddList($event)'> </app-add-list>"
 
 /***/ }),
 
@@ -345,30 +360,22 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var ViewListComponent = /** @class */ (function () {
+    // private priorityMap : any = {};
     function ViewListComponent(listServ) {
         this.listServ = listServ;
         this.lists = [];
-        this.priorityList = [];
     }
     ViewListComponent.prototype.ngOnInit = function () {
-        this.loadPriorities();
+        // this.loadPriorities();
         this.loadLists();
-    };
-    ViewListComponent.prototype.loadPriorities = function () {
-        var _this = this;
-        this.listServ.getPriorities().subscribe(function (res) {
-            if (res['success']) {
-                console.log(res['object']);
-                _this.priorityList = res['object'];
-            }
-        }, function (err) {
-        });
     };
     ViewListComponent.prototype.loadLists = function () {
         var _this = this;
         //Get all lists from server and update the lists property
         this.listServ.getAllLists().subscribe(function (res) {
-            _this.lists = res.lists;
+            var bucketList = res.lists;
+            // console.log(bucketList);
+            _this.lists = bucketList;
         }, function (err) {
         });
     };
@@ -457,7 +464,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\OJN5KOR\Desktop\Gantt-Project\BucketList_v2.0\angular-src\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Workspaces\New folder\BucketList_v2.0\angular-src\src\main.ts */"./src/main.ts");
 
 
 /***/ })

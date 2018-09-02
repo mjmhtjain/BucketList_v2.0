@@ -10,44 +10,25 @@ import { ListService } from '../list.service';
 export class ViewListComponent implements OnInit {
 
   private lists: any = [];
-  private priorityList: any = [];
-  private priorityMap : any;
+  
+  // private priorityMap : any = {};
 
   constructor(private listServ: ListService) {
 
   }
 
   ngOnInit() {
-    this.loadPriorities();
+    // this.loadPriorities();
     this.loadLists();
-  }
-
-  public loadPriorities(){
-    this.listServ.getPriorities().subscribe(res => {
-      if(res['success']){
-        // console.log( res['object']);
-        this.priorityList = res['object'];
-        this.priorityList.forEach(element => {
-          this.priorityMap[element._id] = element;
-        })
-      }
-    }, err=>{
-
-    });
   }
 
   public loadLists() {
 
     //Get all lists from server and update the lists property
     this.listServ.getAllLists().subscribe(res => {
-      // this.lists = res.lists;
       let bucketList = res.lists;
-      bucketList.forEach(element => {
-        let objectId = element.category;
-        if(this.priorityMap.hasOwnProperty(objectId)){
-          element.category = this.priorityMap.objectId;
-        }
-      });
+      // console.log(bucketList);
+      this.lists = bucketList;
     }, err => {
 
     });

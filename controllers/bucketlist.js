@@ -5,13 +5,23 @@ const bucketlist = require("../models/list");
 
 app.get("/", (req, res) => {
     // res.send("GET METHOD");
-    bucketlist.getAllLists((err, lists) => {
+    // bucketlist.getAllLists((err, lists) => {
+    //     if (err) {
+    //         res.json({ success: false, message: `Failed to load all lists. Error: ${err}` });
+    //     } else {
+    //         res.write(JSON.stringify({ success: true, lists: lists }, null, 2));
+    //         res.end();
+
+    //     }
+    // });
+
+    bucketlist.fetchBucketList((err, lists) => {
         if (err) {
             res.json({ success: false, message: `Failed to load all lists. Error: ${err}` });
         } else {
-            res.write(JSON.stringify({ success: true, lists: lists }, null, 2));
-            res.end();
-
+            // res.write(JSON.stringify({ success: true, lists: lists }, null, 2));
+            // res.end();
+            res.json({ success: true, lists : lists });
         }
     });
 })

@@ -10,8 +10,7 @@ const BucketlistSchema = mongoose.Schema({
     description: String,
     category: {
         type: String,
-        required: true,
-        enum: ['High', 'Medium', 'Low']
+        required: true
     }
 });
 
@@ -32,3 +31,16 @@ module.exports.deleteListById = (id, callback) => {
     let query = { _id: id };
     BucketList.remove(query, callback);
 }
+
+var fetchBucketList = function(callback){
+    var lookedUp = BucketList.aggregate([
+        {$lookup : {
+            from: "priorities",
+            localField: "category",
+            foreignField: "_id",
+            as: "category_priorities"
+        }}
+    ], callback);
+}
+
+module.exports.fetchBucketList = fetchBucketList;

@@ -37,7 +37,7 @@
       <tbody>
         <tr *ngFor="let list of lists; let i = index">
           <td>{{i+1}}</td>
-          <td>{{list.category}}</td>
+          <td>{{list.category_priorities[0].level}}</td>
           <td>{{list.title}}</td>
           <td>{{list.description}}</td>
           <td>
