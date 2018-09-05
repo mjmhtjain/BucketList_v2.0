@@ -4,24 +4,12 @@ const app = express();
 const bucketlist = require("../models/list");
 
 app.get("/", (req, res) => {
-    // res.send("GET METHOD");
-    // bucketlist.getAllLists((err, lists) => {
-    //     if (err) {
-    //         res.json({ success: false, message: `Failed to load all lists. Error: ${err}` });
-    //     } else {
-    //         res.write(JSON.stringify({ success: true, lists: lists }, null, 2));
-    //         res.end();
-
-    //     }
-    // });
-
-    bucketlist.fetchBucketList((err, lists) => {
+    let aggregation = bucketlist.fetchBucketList();
+    aggregation.exec((err, lists) => {
         if (err) {
             res.json({ success: false, message: `Failed to load all lists. Error: ${err}` });
         } else {
-            // res.write(JSON.stringify({ success: true, lists: lists }, null, 2));
-            // res.end();
-            res.json({ success: true, lists : lists });
+            res.json({ success: true, lists: lists });
         }
     });
 })
@@ -30,16 +18,18 @@ app.post('/', (req, res, next) => {
     let newList = new bucketlist({
         title: req.body.title,
         description: req.body.description,
-        category: req.body.category
+        category: req.body.priority._id
     });
-    bucketlist.addList(newList, (err, list) => {
-        if (err) {
-            res.json({ success: false, message: `Failed to create a new list. Error: ${err}` });
-        } else {
-            res.json({ success: true, message: "Added successfully.", object : list});
-            // console.log(list.id);
-        }
-
+    bucketlist.addList(newList).then((product) => {
+        bucketlist.fetchBucketListById(product._id).exec((err, product) => {
+            if (err) {
+                res.json({ success: false, message: '' + err });
+            } else {
+                res.json({ success: true, message: "Added successfully.", object: product });
+            }
+        })
+    }, (err) => {
+        res.json({ success: false, message: '' + err });
     });
 });
 

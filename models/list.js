@@ -9,7 +9,7 @@ const BucketlistSchema = mongoose.Schema({
     },
     description: String,
     category: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     }
 });
@@ -22,8 +22,8 @@ module.exports.getAllLists = (callback) => {
 }
 
 //newList.save is used to insert the document into MongoDB
-module.exports.addList = (newList, callback) => {
-    newList.save(callback);
+module.exports.addList = (newList) => {
+    return newList.save();
 }
 
 //Here we need to pass an id parameter to BUcketList.remove
@@ -32,15 +32,33 @@ module.exports.deleteListById = (id, callback) => {
     BucketList.remove(query, callback);
 }
 
-var fetchBucketList = function(callback){
-    var lookedUp = BucketList.aggregate([
-        {$lookup : {
-            from: "priorities",
-            localField: "category",
-            foreignField: "_id",
-            as: "category_priorities"
-        }}
-    ], callback);
+var fetchBucketList = function () {
+    return BucketList.aggregate([
+        {
+            $lookup: {
+                from: "priorities",
+                localField: "category",
+                foreignField: "_id",
+                as: "category_priorities"
+            }
+        }
+    ]);
 }
 
 module.exports.fetchBucketList = fetchBucketList;
+
+var fetchBucketListById = function (bucketId) {
+    return BucketList.aggregate([
+        { $match: { _id: bucketId } },
+        {
+            $lookup: {
+                from: "priorities",
+                localField: "category",
+                foreignField: "_id",
+                as: "category_priorities"
+            }
+        }
+    ]);
+}
+
+module.exports.fetchBucketListById = fetchBucketListById;

@@ -24,7 +24,7 @@
             </div>
             <div class="col-sm-10">
               <select class="form-control" [(ngModel)]="newList.priority" name="category">
-                <option value="p" *ngFor="let p of priorityList">{{p.level}}</option>
+                <option value="{{p}}" *ngFor="let p of priorityList">{{p.level}}</option>
               </select>
             </div>
           </div>

@@ -9,7 +9,7 @@ import { ListService } from '../list.service';
 })
 export class ViewListComponent implements OnInit {
 
-  private lists: any = [];
+  private lists: any ;
   
   // private priorityMap : any = {};
 

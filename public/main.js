@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\r\n  <div class=\"modal-dialog\" role=\"document\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Add BucketList</h5>\r\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <form>\r\n          <div class=\"form-group row\">\r\n            <div class=\"col-sm-2\">\r\n              <label for=\"title\" class=\"col-form-label\">Title</label>\r\n            </div>\r\n            <div class=\"col-sm-10\">\r\n              <input class=\"form-control\" type=\"text\" [(ngModel)]=\"newList.title\" name=\"title\" required>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"form-group row\">\r\n            <div class=\"col-sm-2\">\r\n              <label for=\"category\" class=\"col-form-label\">Priority</label>\r\n            </div>\r\n            <div class=\"col-sm-10\">\r\n              <select class=\"form-control\" [(ngModel)]=\"newList.priority\" name=\"category\">\r\n                <option value=\"p\" *ngFor=\"let p of priorityList\">{{p.level}}</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"form-group row\">\r\n            <div class=\"col-sm-2\">\r\n              <label for=\"description\" class=\"col-form-label\">description</label>\r\n            </div>\r\n            <div class=\"col-sm-10\">\r\n              <input class=\"form-control\" type=\"text\" [(ngModel)]=\"newList.description\" name=\"description\" required>\r\n            </div>\r\n          </div>\r\n\r\n        </form>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n        <button type=\"submit\" class=\"btn btn-primary\" (click)=\"onSubmit()\">Add</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\r\n  <div class=\"modal-dialog\" role=\"document\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Add BucketList</h5>\r\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <form>\r\n          <div class=\"form-group row\">\r\n            <div class=\"col-sm-2\">\r\n              <label for=\"title\" class=\"col-form-label\">Title</label>\r\n            </div>\r\n            <div class=\"col-sm-10\">\r\n              <input class=\"form-control\" type=\"text\" [(ngModel)]=\"newList.title\" name=\"title\" required>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"form-group row\">\r\n            <div class=\"col-sm-2\">\r\n              <label for=\"category\" class=\"col-form-label\">Priority</label>\r\n            </div>\r\n            <div class=\"col-sm-10\">\r\n              <select class=\"form-control\" [(ngModel)]=\"newList.priority\" name=\"category\">\r\n                <option value=\"{{p}}\" *ngFor=\"let p of priorityList\">{{p.level}}</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"form-group row\">\r\n            <div class=\"col-sm-2\">\r\n              <label for=\"description\" class=\"col-form-label\">description</label>\r\n            </div>\r\n            <div class=\"col-sm-10\">\r\n              <input class=\"form-control\" type=\"text\" [(ngModel)]=\"newList.description\" name=\"description\" required>\r\n            </div>\r\n          </div>\r\n\r\n        </form>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n        <button type=\"submit\" class=\"btn btn-primary\" (click)=\"onSubmit()\">Add</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -56,7 +56,8 @@ module.exports = "<div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddListComponent", function() { return AddListComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _list_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../list.service */ "./src/app/list.service.ts");
+/* harmony import */ var _models_List__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/List */ "./src/app/models/List.ts");
+/* harmony import */ var _list_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../list.service */ "./src/app/list.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -68,20 +69,16 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var AddListComponent = /** @class */ (function () {
     function AddListComponent(listServ) {
         this.listServ = listServ;
+        this.newList = new _models_List__WEBPACK_IMPORTED_MODULE_1__["ListClass"]();
         this.priorityList = [];
         this.addList = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
     }
     AddListComponent.prototype.ngOnInit = function () {
-        // this.newList = {
-        //   title: '',
-        //   category: '',
-        //   description: '',
-        //   _id: ''
         var _this = this;
-        // };
         this.loadPriorities(function (priority) {
             _this.newList['priority'] = priority;
         });
@@ -91,7 +88,7 @@ var AddListComponent = /** @class */ (function () {
         var _this = this;
         this.listServ.getPriorities().subscribe(function (res) {
             if (res['success']) {
-                console.log(res['object']);
+                // console.log(res['object']);
                 _this.priorityList = res['object'];
                 callback(_this.priorityList[0]);
             }
@@ -101,12 +98,20 @@ var AddListComponent = /** @class */ (function () {
     AddListComponent.prototype.onSubmit = function () {
         var _this = this;
         this.listServ.addList(this.newList).subscribe(function (response) {
-            // console.log(response);
             if (response['success'] == true) {
                 _this.addList.emit(response['object']);
+                _this.resetFormData();
+                _this.hideModal();
             }
-            //If success, update the view-list component
         });
+    };
+    AddListComponent.prototype.hideModal = function () {
+        // document.getElementById('exampleModal').modal('hide');
+        $("#exampleModal").modal('hide');
+    };
+    AddListComponent.prototype.resetFormData = function () {
+        this.newList = new _models_List__WEBPACK_IMPORTED_MODULE_1__["ListClass"]();
+        this.newList['priority'] = this.priorityList[0];
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
@@ -118,7 +123,7 @@ var AddListComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./add-list.component.html */ "./src/app/add-list/add-list.component.html"),
             styles: [__webpack_require__(/*! ./add-list.component.css */ "./src/app/add-list/add-list.component.css")]
         }),
-        __metadata("design:paramtypes", [_list_service__WEBPACK_IMPORTED_MODULE_1__["ListService"]])
+        __metadata("design:paramtypes", [_list_service__WEBPACK_IMPORTED_MODULE_2__["ListService"]])
     ], AddListComponent);
     return AddListComponent;
 }());
@@ -145,7 +150,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-sm bg-light\">\r\n\r\n  <!-- Links -->\r\n  <ul class=\"nav nav-pills\">\r\n    <li class=\"nav-item\">\r\n      <a class=\"nav-link active\" href=\"#\">Link 1</a>\r\n    </li>\r\n    <li class=\"nav-item\">\r\n      <a class=\"nav-link\" href=\"#\">Link 2</a>\r\n    </li>\r\n    <li class=\"nav-item\">\r\n      <a class=\"nav-link\" href=\"#\">Link 3</a>\r\n    </li>\r\n  </ul>\r\n\r\n  <ul class=\"nav nav-pills ml-auto\">\r\n    <li class=\"nav-item\">\r\n      <a class=\"nav-link\" href=\"#\">User Name</a>\r\n    </li>\r\n\r\n    <li class=\"nav-item\">\r\n      <a class=\"navbar-brand\" href=\"#\">\r\n        <i class=\"far fa-user\"></i>\r\n      </a>\r\n    </li>\r\n  </ul>\r\n\r\n</nav>\r\n<div class=\"container-fluid\" style=\"margin-top: 10px\">\r\n  <div >\r\n    <app-view-list> </app-view-list>\r\n  </div>\r\n\r\n</div>"
+module.exports = "<nav class=\"navbar navbar-expand-sm bg-light\">\n\n  <!-- Links -->\n  <ul class=\"nav nav-pills\">\n    <li class=\"nav-item\">\n      <a class=\"nav-link active\" href=\"#\">Link 1</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Link 2</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Link 3</a>\n    </li>\n  </ul>\n\n  <ul class=\"nav nav-pills ml-auto\">\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">User Name</a>\n    </li>\n\n    <li class=\"nav-item\">\n      <a class=\"navbar-brand\" href=\"#\">\n        <i class=\"far fa-user\"></i>\n      </a>\n    </li>\n  </ul>\n\n</nav>\n<div class=\"container-fluid\" style=\"margin-top: 10px\">\n  <div >\n    <app-view-list> </app-view-list>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -314,6 +319,30 @@ var ListService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/models/List.ts":
+/*!********************************!*\
+  !*** ./src/app/models/List.ts ***!
+  \********************************/
+/*! exports provided: ListClass */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ListClass", function() { return ListClass; });
+var ListClass = /** @class */ (function () {
+    function ListClass() {
+        this._id = '';
+        this.title = '';
+        this.description = '';
+        this.category = '';
+    }
+    return ListClass;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/view-list/view-list.component.css":
 /*!***************************************************!*\
   !*** ./src/app/view-list/view-list.component.css ***!
@@ -363,7 +392,6 @@ var ViewListComponent = /** @class */ (function () {
     // private priorityMap : any = {};
     function ViewListComponent(listServ) {
         this.listServ = listServ;
-        this.lists = [];
     }
     ViewListComponent.prototype.ngOnInit = function () {
         // this.loadPriorities();
@@ -464,7 +492,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Workspaces\New folder\BucketList_v2.0\angular-src\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\OJN5KOR\Desktop\Gantt-Project\BucketList_v2.0\angular-src\src\main.ts */"./src/main.ts");
 
 
 /***/ })
